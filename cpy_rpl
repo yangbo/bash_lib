@@ -1,0 +1,13 @@
+#!/bin/bash
+# Author: Bob Yang (bob.yang.dev@gmail.com)
+# Copy and Replace the port in redis configure file.
+
+for port in {6380..6386}
+do
+  echo processing $port...
+  newfile="redis_$port.conf"
+  cp redis_6379.conf $newfile
+  sed -i -e "s/6379/$port/g" $newfile
+done
+
+echo done!
