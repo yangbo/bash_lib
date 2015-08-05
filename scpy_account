@@ -3,10 +3,12 @@
       18)
          pass='xxx'
          host='127.1.1.1'
+         username='yourname'
       ;;
       19)
          pass='yourpass'
          host='172.1.1.2'
+         username='yourname'
       ;;
       *)
          echo 'Unknow Host id: $host_id'
