@@ -1,0 +1,18 @@
+# Author: Bob Yang
+# 2015-08-05
+
+for port in {6379..6386}
+do
+  echo "stop redis in port $port..."
+  pid="../log/redis_$port.pid"
+  if [ -e $pid ] ; then
+    kill `cat $pid`
+  else
+    echo "	pid file does not exists."
+  fi
+done
+
+echo done!
+
+sleep 5
+ps -ef | grep redis | grep -v grep

@@ -1,0 +1,13 @@
+#!/bin/bash
+# Author : Bob Yang (bob.yang.dev@gmail.com)
+# 2015-08-05
+#
+for port in {6379..6386}
+do
+  echo "start redis in port $port ..."
+  ./redis-server ../conf/redis_$port.conf
+done
+
+echo done!
+
+ps -ef | grep redis | grep -v grep
