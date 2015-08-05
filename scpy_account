@@ -1,0 +1,13 @@
+   # map host id to host ip,password and username
+   case "$host_id" in
+      18)
+         pass='xxx'
+         host='127.1.1.1'
+      ;;
+      19)
+         pass='yourpass'
+         host='172.1.1.2'
+      ;;
+      *)
+         echo 'Unknow Host id: $host_id'
+   esac

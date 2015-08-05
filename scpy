@@ -1,0 +1,41 @@
+# Author : Bob Yang (bob.yang.dev@gmail.com) 
+# 2015-08-04
+# License: GNU
+
+if (( "$#" < 2 ))
+then
+   echo "Syntax: $0 <src> <dst_id:path>"
+   exit 1
+fi
+
+# split address string like '19:/mami100/redis', 19 is host id and last part is path.
+# arguments: $1=addr_str, will be as return variable
+#          : $2=return variable name, such as 'src'
+function translate_addr()
+{
+   addr_str="$1"
+   if [[ ! ( "$addr_str" =~ ":" ) ]] ; then
+      eval "$2='$1'"
+      return 0
+   fi
+   IFS=':' read -ra dstarray <<< "$addr_str"
+   host_id=${dstarray[0]}
+   path=${dstarray[1]}
+   
+   # default user name
+   username='mami100'
+   
+   # fetch password from host id
+   account_file="`dirname $0`/scpy_account"
+   source "$account_file"
+   eval "$2='$username@$host:$path'"
+}
+
+src="$1"
+dst="$2"
+translate_addr "$src" 'src'
+translate_addr "$dst" 'dst'
+
+cmd="scp $src $dst"
+
+expect -c "spawn $cmd; expect \"password:\"; send \"${pass}\r\"; interact"
